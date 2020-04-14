@@ -1,0 +1,43 @@
+plugins {
+  id 'com.github.sherter.google-java-format' version '0.8'
+  id 'java-gradle-plugin'
+}
+
+version '0.0.1-SNAPSHOT'
+
+repositories {
+  jcenter()
+}
+
+gradlePlugin {
+  plugins {
+    gitHooksPlugin {
+      id = "com.jakemarsden.git-hooks"
+      implementationClass = "com.jakemarsden.githooksgradleplugin.GitHooksPlugin"
+    }
+  }
+}
+
+java {
+  sourceCompatibility JavaVersion.VERSION_11
+  targetCompatibility JavaVersion.VERSION_11
+}
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs += [
+      '-Werror',
+      '-Xlint:all',
+      '-Xlint:-processing'
+  ]
+}
+
+googleJavaFormat {
+  toolVersion '1.7'
+  options style: 'GOOGLE'
+}
+
+task format {
+  // alias
+  group tasks.googleJavaFormat.group
+  dependsOn tasks.googleJavaFormat
+}
