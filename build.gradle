@@ -3,7 +3,8 @@ plugins {
   id 'java-gradle-plugin'
 }
 
-version '0.0.1-SNAPSHOT'
+group 'com.jakemarsden'
+version file('VERSION').text.trim()
 
 repositories {
   jcenter()
@@ -21,6 +22,7 @@ gradlePlugin {
 java {
   sourceCompatibility JavaVersion.VERSION_11
   targetCompatibility JavaVersion.VERSION_11
+  withSourcesJar()
 }
 
 tasks.withType(JavaCompile) {

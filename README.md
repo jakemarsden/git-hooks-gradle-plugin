@@ -2,6 +2,8 @@
 
 Configure shared [Git hooks][git-hooks] right from your [Gradle][gradle] buildscript
 
+[![CI][workflow-ci-badge]][workflow-ci]
+
 ## Example usage
 
 Ensure the `check` task succeeds before every commit:
@@ -49,3 +51,5 @@ This will create a `../.git/hooks/pre-commit` script:
 
 [git-hooks]: https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks
 [gradle]: https://gradle.org/
+[workflow-ci]: https://github.com/jakemarsden/git-hooks-gradle-plugin/actions?query=workflow%3ACI
+[workflow-ci-badge]: https://github.com/jakemarsden/git-hooks-gradle-plugin/workflows/CI/badge.svg
