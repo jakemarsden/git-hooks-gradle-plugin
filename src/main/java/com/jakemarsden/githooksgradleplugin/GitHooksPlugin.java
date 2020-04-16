@@ -2,10 +2,6 @@ package com.jakemarsden.githooksgradleplugin;
 
 import static java.util.stream.Collectors.toUnmodifiableSet;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 import org.gradle.api.Plugin;
@@ -45,32 +41,13 @@ public class GitHooksPlugin implements Plugin<Project> {
   }
 
   private void writeHooks(GitHooksExtension extension) {
-    var hooks = extension.hooks.get();
-    var hooksDirectory = extension.hooksDirectory.getAsFile().get().toPath();
-    var gradleScript = extension.gradleScript.get();
+    var hooks = extension.finalizeHooks();
+    var hooksDirectory = extension.finalizeHooksDirectory().getAsFile().toPath();
+    var gradleCommand = extension.finalizeGradleCommand();
+    var writer = new GitHookWriter(hooksDirectory, gradleCommand);
 
     this.validateHooks(hooks);
-    hooks.forEach(
-        (hookName, gradleTask) -> {
-          var hookScript = this.generateHookScript(gradleScript, gradleTask);
-          this.writeHookScript(hooksDirectory, hookName, hookScript);
-        });
-  }
-
-  private void writeHookScript(Path directoryPath, String name, String script) {
-    var path = directoryPath.resolve(name);
-    try {
-      Files.writeString(path, script);
-    } catch (IOException e) {
-      throw new UncheckedIOException(e);
-    }
-    if (!path.toFile().setExecutable(true, false)) {
-      throw new UnsupportedOperationException("Failed to set executable permission for: " + path);
-    }
-  }
-
-  private String generateHookScript(String gradleScript, String gradleTask) {
-    return "#!/bin/bash\n" + gradleScript + ' ' + gradleTask + '\n';
+    hooks.forEach(writer::writeHook);
   }
 
   private void validateHooks(Map<String, String> hooks) {
