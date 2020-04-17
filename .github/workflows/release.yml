@@ -1,7 +1,8 @@
-name: CI
+name: Release
 on:
-  - pull_request
-  - push
+  push:
+    tags:
+      - v*.*.*
 
 jobs:
   build:
@@ -40,3 +41,9 @@ jobs:
         with:
           name: test-report
           path: build/reports/tests/test
+
+      - name: Publish to GitHub Packages
+        run: ./gradlew publishAllPublicationsToGithubPackagesRepository
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ github.token }}

@@ -1,6 +1,7 @@
 plugins {
   id 'com.github.sherter.google-java-format' version '0.8'
   id 'java-gradle-plugin'
+  id 'maven-publish'
 }
 
 group 'com.jakemarsden'
@@ -63,4 +64,22 @@ task format {
   // alias
   group tasks.googleJavaFormat.group
   dependsOn tasks.googleJavaFormat
+}
+
+publishing {
+  repositories {
+    // Ensure the version is a valid semver, and is not a `-SNAPSHOT`, before giving the option to
+    // publish to GitHub Packages (just in case)
+    if (version ==~ /^[0-9]+\.[0-9]+\.[0-9]+$/) {
+      maven {
+        name = 'githubPackages'
+        url = 'https://maven.pkg.github.com/jakemarsden/git-hooks-gradle-plugin'
+
+        credentials {
+          username = project.findProperty('github.actor') ?: System.getenv('GITHUB_ACTOR')
+          password = project.findProperty('github.token') ?: System.getenv('GITHUB_TOKEN')
+        }
+      }
+    }
+  }
 }
