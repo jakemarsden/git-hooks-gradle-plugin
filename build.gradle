@@ -1,5 +1,6 @@
 plugins {
   id 'com.github.sherter.google-java-format' version '0.8'
+  id "com.gradle.plugin-publish" version "0.11.0"
   id 'java-gradle-plugin'
   id 'maven-publish'
 }
@@ -66,15 +67,31 @@ task format {
   dependsOn tasks.googleJavaFormat
 }
 
+pluginBundle {
+  description = 'Configure shared Git hooks right from your Gradle buildscript'
+  tags = ['git', 'git-hooks']
+  vcsUrl = 'https://github.com/jakemarsden/git-hooks-gradle-plugin.git'
+  website = 'https://github.com/jakemarsden/git-hooks-gradle-plugin'
+
+  plugins {
+    // Ensure the version is a valid semver, and is not a `-SNAPSHOT`, before giving the option to
+    // publish to the Gradle plugins portal (just in case)
+    if (isReleaseVersion()) {
+      gitHooksPlugin {
+        displayName = 'git-hooks'
+      }
+    }
+  }
+}
+
 publishing {
   repositories {
     // Ensure the version is a valid semver, and is not a `-SNAPSHOT`, before giving the option to
     // publish to GitHub Packages (just in case)
-    if (version ==~ /^[0-9]+\.[0-9]+\.[0-9]+$/) {
+    if (isReleaseVersion()) {
       maven {
         name = 'githubPackages'
         url = 'https://maven.pkg.github.com/jakemarsden/git-hooks-gradle-plugin'
-
         credentials {
           username = project.findProperty('github.actor') ?: System.getenv('GITHUB_ACTOR')
           password = project.findProperty('github.token') ?: System.getenv('GITHUB_TOKEN')
@@ -82,4 +99,8 @@ publishing {
       }
     }
   }
+}
+
+private boolean isReleaseVersion() {
+  project.version ==~ /^[0-9]+\.[0-9]+\.[0-9]+$/
 }
