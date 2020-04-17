@@ -13,6 +13,9 @@ import org.gradle.api.provider.Property;
 
 public class GitHooksExtension {
 
+  // FIXME: remove
+  this is broken and will not compile;
+
   private final MapProperty<String, String> hooks;
   private final DirectoryProperty hooksDirectory;
   private final Property<String> gradleCommand;
