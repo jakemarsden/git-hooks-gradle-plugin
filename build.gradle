@@ -33,6 +33,7 @@ gradlePlugin {
 java {
   sourceCompatibility JavaVersion.VERSION_11
   targetCompatibility JavaVersion.VERSION_11
+  withJavadocJar()
   withSourcesJar()
 }
 
@@ -42,6 +43,11 @@ tasks.withType(JavaCompile) {
       '-Xlint:all',
       '-Xlint:-processing'
   ]
+  options.encoding 'UTF-8'
+}
+
+tasks.withType(Javadoc) {
+  options.encoding 'UTF-8'
 }
 
 tasks.withType(Test) {
