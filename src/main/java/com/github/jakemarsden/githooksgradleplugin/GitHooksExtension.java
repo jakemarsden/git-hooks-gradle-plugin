@@ -1,4 +1,4 @@
-package com.jakemarsden.githooksgradleplugin;
+package com.github.jakemarsden.githooksgradleplugin;
 
 import static java.util.Collections.unmodifiableMap;
 

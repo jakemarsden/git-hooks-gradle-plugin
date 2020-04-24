@@ -1,4 +1,4 @@
-package com.jakemarsden.githooksgradleplugin;
+package com.github.jakemarsden.githooksgradleplugin;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
@@ -11,7 +11,7 @@ class GitHooksPluginTest {
   @Test
   void pluginExistsUnderCorrectId() {
     var project = ProjectBuilder.builder().build();
-    project.getPluginManager().apply("com.jakemarsden.git-hooks");
+    project.getPluginManager().apply("com.github.jakemarsden.git-hooks");
 
     var plugin = project.getPlugins().findPlugin(GitHooksPlugin.class);
     assertThat(plugin, instanceOf(GitHooksPlugin.class));

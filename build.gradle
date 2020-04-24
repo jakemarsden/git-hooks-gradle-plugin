@@ -5,7 +5,7 @@ plugins {
   id 'maven-publish'
 }
 
-group 'com.jakemarsden'
+group 'com.github.jakemarsden'
 version file('VERSION').text.trim()
 
 repositories {
@@ -26,8 +26,8 @@ dependencies {
 gradlePlugin {
   plugins {
     gitHooksPlugin {
-      id = "com.jakemarsden.git-hooks"
-      implementationClass = "com.jakemarsden.githooksgradleplugin.GitHooksPlugin"
+      id = "com.github.jakemarsden.git-hooks"
+      implementationClass = "com.github.jakemarsden.githooksgradleplugin.GitHooksPlugin"
     }
   }
 }

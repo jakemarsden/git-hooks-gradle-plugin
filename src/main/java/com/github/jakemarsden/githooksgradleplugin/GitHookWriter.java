@@ -1,4 +1,4 @@
-package com.jakemarsden.githooksgradleplugin;
+package com.github.jakemarsden.githooksgradleplugin;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
