@@ -1,13 +1,19 @@
 name: CI
 on:
-  pull_request:
-  push:
-    tags-ignore:
-      - v*.*.*
+  - pull_request
+  - push
 
 jobs:
   build:
+    name: Build with JDK ${{ matrix.java }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java:
+          - 1.8
+          - 11
+          - 14
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -18,7 +24,7 @@ jobs:
       - name: Install JDK
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: ${{ matrix.java }}
 
       - name: Restore Gradle cache
         uses: actions/cache@v1
