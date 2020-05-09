@@ -2,6 +2,7 @@ package com.github.jakemarsden.githooksgradleplugin;
 
 import static java.util.Collections.unmodifiableMap;
 
+import java.util.HashMap;
 import java.util.Map;
 import javax.inject.Inject;
 import org.gradle.api.file.Directory;
@@ -32,7 +33,7 @@ public class GitHooksExtension {
   }
 
   public void setHooks(Map<String, String> hooks) {
-    this.hooks.set(Map.copyOf(hooks));
+    this.hooks.set(new HashMap<>(hooks));
   }
 
   public DirectoryProperty getHooksDirectory() {

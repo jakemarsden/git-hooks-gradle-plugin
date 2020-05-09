@@ -1,10 +1,10 @@
 package com.github.jakemarsden.githooksgradleplugin;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.slf4j.Logger;
@@ -22,8 +22,8 @@ final class GitHookWriter {
   }
 
   void writeHook(String hookName, String gradleTask) {
-    var script = this.generateScript(gradleTask);
-    var scriptPath = this.hooksDirectory.resolve(hookName);
+    String script = this.generateScript(gradleTask);
+    Path scriptPath = this.hooksDirectory.resolve(hookName);
 
     LOGGER.info("Writing hook script '{}'", scriptPath);
     try {
@@ -32,7 +32,7 @@ final class GitHookWriter {
       throw new UncheckedIOException("Failed to create missing parent(s) for: " + scriptPath, e);
     }
     try {
-      Files.writeString(scriptPath, script, StandardCharsets.UTF_8);
+      Files.write(scriptPath, script.getBytes(UTF_8));
     } catch (IOException e) {
       throw new UncheckedIOException("Failed to write to file: " + scriptPath, e);
     }

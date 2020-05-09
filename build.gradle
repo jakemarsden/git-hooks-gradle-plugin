@@ -25,7 +25,7 @@ ext {
 dependencies {
   testImplementation "org.hamcrest:hamcrest:$hamcrestVersion"
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-  testImplementation "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+  testRuntime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
 gradlePlugin {
@@ -38,8 +38,8 @@ gradlePlugin {
 }
 
 java {
-  sourceCompatibility JavaVersion.VERSION_11
-  targetCompatibility JavaVersion.VERSION_11
+  sourceCompatibility JavaVersion.VERSION_1_8
+  targetCompatibility JavaVersion.VERSION_1_8
   withJavadocJar()
   withSourcesJar()
 }
