@@ -9,21 +9,45 @@ Configure shared [Git hooks][git-hooks] right from your [Gradle][gradle] buildsc
 
 ## Setup
 
+#### Groovy
+
 ```groovy
 plugins {
   id 'com.github.jakemarsden.git-hooks' version 'x.x.x'
 }
 ```
 
+#### Kotlin
+
+```kotlin
+plugins {
+  id("com.github.jakemarsden.git-hooks") version "x.x.x"
+}
+```
+
 ## Example usage
 
+### Simple
+
 Ensure the `check` task succeeds before every commit:
+
+#### Groovy
 
 ```groovy
 gitHooks {
   hooks = ['pre-commit': 'check']
 }
 ```
+
+#### Kotlin
+
+```kotlin
+gitHooks {
+  setHooks(mapOf("pre-commit" to "check"))
+}
+```
+
+#### Output
 
 This will create a `.git/hooks/pre-commit` script the next time any Gradle task runs:
 
@@ -32,8 +56,12 @@ This will create a `.git/hooks/pre-commit` script the next time any Gradle task 
 ./gradlew check
 ```
 
+### Full
+
 The hooks directory and the Gradle command can also be changed, and a single project can have
 multiple hooks:
+
+#### Groovy
 
 ```groovy
 gitHooks {
@@ -45,6 +73,18 @@ gitHooks {
   gradleCommand = '/usr/bin/my-gradle-executable'
 }
 ```
+
+#### Kotlin
+
+```kotlin
+gitHooks {
+  setHooks(mapOf("pre-commit" to "check", "pre-push" to "myPrePushTask myOtherPrePushTask --info"))
+  setHooksDirectory(layout.projectDirectory.dir("../.git/hooks"))
+  setGradleCommand("/usr/bin/my-gradle-executable")
+}
+```
+
+#### Output
 
 This will create a `../.git/hooks/pre-commit` script:
 
