@@ -42,7 +42,7 @@ gitHooks {
 #### Kotlin
 
 ```kotlin
-configure<com.github.jakemarsden.githooksgradleplugin.GitHooksExtension> {
+gitHooks {
   setHooks(mapOf("pre-commit" to "check"))
 }
 ```
@@ -77,7 +77,7 @@ gitHooks {
 #### Kotlin
 
 ```kotlin
-configure<com.github.jakemarsden.githooksgradleplugin.GitHooksExtension> {
+gitHooks {
   setHooks(mapOf("pre-commit" to "check", "pre-push" to "myPrePushTask myOtherPrePushTask --info"))
   setHooksDirectory(layout.projectDirectory.dir("../.git/hooks"))
   setGradleCommand("/usr/bin/my-gradle-executable")
